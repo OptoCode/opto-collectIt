@@ -6,7 +6,7 @@ import { firebaseApp } from "./firebase/config";
 import App from "./App.vue";
 import router from "./router";
 
-import "./assets/main.css";
+// import "./assets/main.css";
 // Vuetify
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
@@ -22,7 +22,7 @@ const app = createApp(App);
 app.use(VueFire, {
   firebaseApp,
   // add modules like VueFireAuth, ...
-  modules: [VueFireAuth],
+  modules: [VueFireAuth()],
 });
 app.use(vuetify);
 app.use(createPinia());

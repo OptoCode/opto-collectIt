@@ -1,14 +1,16 @@
-import { fileURLToPath, URL } from 'node:url'
-import { resolve, dirname } from "node:path";
+import { fileURLToPath, URL } from "node:url";
 import { VitePWA } from "vite-plugin-pwa";
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx(), VitePWA({
+  plugins: [
+    vue(),
+    vueJsx(),
+    VitePWA({
       mode: "development",
       registerType: "autoUpdate",
       base: "/",
@@ -19,7 +21,7 @@ export default defineConfig({
       },
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
       manifest: {
-        name: "Opto Templat3",
+        name: "CollectIt",
         short_name: "Template",
         theme_color: "#ffffff",
         icons: [
@@ -43,7 +45,15 @@ export default defineConfig({
             purpose: "any maskable",
           },
         ],
-        permissions: ["notifications"],
+        share_target: {
+          action: "/add-link",
+          method: "POST",
+          enctype: "multipart/form-data",
+          params: {
+            title: "title",
+            url: "url",
+          },
+        },
       },
       workbox: {
         globPatterns: ["**/*.{js,css,html,woff2}"],
@@ -77,7 +87,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
-})
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
+});
