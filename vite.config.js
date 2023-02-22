@@ -22,8 +22,12 @@ export default defineConfig({
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "masked-icon.svg"],
       manifest: {
         name: "CollectIt",
-        short_name: "Template",
-        theme_color: "#ffffff",
+        short_name: "CollectIt",
+        description: "Collect your links in one place",
+        start_url: "/",
+        display: "standalone",
+        background_color: "#ffffff",
+        theme_color: "#2196F3",
         icons: [
           {
             src: "apple-touch-icon.png",
@@ -51,7 +55,7 @@ export default defineConfig({
           enctype: "multipart/form-data",
           params: {
             title: "title",
-            url: "url",
+            text: "url",
           },
         },
       },
