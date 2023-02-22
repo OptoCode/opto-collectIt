@@ -15,9 +15,15 @@ import { useCurrentUser } from "vuefire";
 export const useLinksStore = defineStore({
   id: "links",
   state: () => ({
+    search: "",
     links: [],
     user: useCurrentUser(),
   }),
+  getters: {
+    getLinkById: (state) => (id) => {
+      return state.links.find((link) => link.id === id);
+    },
+  },
   actions: {
     async fetchLinks(id) {
       const linksCollection = collection(db, "users", id, "links");
@@ -28,13 +34,13 @@ export const useLinksStore = defineStore({
     async addLink(link) {
       const linksCollection = collection(db, "users", this.user.uid, "links");
       await addDoc(linksCollection, link);
-      this.fetchLinks();
+      this.fetchLinks(this.user.uid);
     },
     async updateLink(link) {
       // const linkRef = doc(db, "users", id, "links", link.id);
       const linkRef = doc(db, "links", link.id);
       await updateDoc(linkRef, link);
-      this.fetchLinks();
+      this.fetchLinks(this.user.uid);
     },
     async deleteLink(linkId) {
       if (!this.user) return;

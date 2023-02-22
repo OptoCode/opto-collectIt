@@ -13,19 +13,17 @@
     "preview-hosting": "npm run build && firebase hosting:channel:deploy opto-collectit-preview"
   },
   "dependencies": {
-    "firebase": "^9.15.0",
+    "@vueuse/core": "^9.9.0",
+    "firebase": "^9.17.1",
     "pinia": "^2.0.28",
+    "pug": "^3.0.2",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuefire": "^3.0.1",
-    "vuetify": "^3.0.6",
-    "pug": "^3.0.2",
-    "@vueuse/core": "^9.9.0"
+    "vuetify": "^3.0.6"
   },
   "devDependencies": {
     "@mdi/font": "^7.1.96",
-    "sass": "^1.57.1",
-    "vite-plugin-pwa": "^0.14.0",
     "@playwright/test": "^1.28.1",
     "@rushstack/eslint-patch": "^1.1.4",
     "@vitejs/plugin-vue": "^4.0.0",
@@ -36,7 +34,9 @@
     "eslint-plugin-vue": "^9.3.0",
     "jsdom": "^20.0.3",
     "prettier": "^2.7.1",
+    "sass": "^1.57.1",
     "vite": "^4.0.0",
+    "vite-plugin-pwa": "^0.14.0",
     "vitest": "^0.25.6"
   }
 }
