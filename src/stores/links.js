@@ -37,8 +37,7 @@ export const useLinksStore = defineStore({
       this.fetchLinks(this.user.uid);
     },
     async updateLink(link) {
-      // const linkRef = doc(db, "users", id, "links", link.id);
-      const linkRef = doc(db, "links", link.id);
+      const linkRef = doc(db, "users", this.user.uid, "links", link);
       await updateDoc(linkRef, link);
       this.fetchLinks(this.user.uid);
     },

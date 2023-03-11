@@ -20,13 +20,16 @@ v-container
         v-img(v-else src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif" height="200px")
         v-card-text 
           v-chip-group
-            v-chip(v-for='tag in link.tags' :key='tag' size="x-small") {{ tag }}
-        v-card-text(v-show="link.notes") 
-          h3 {{ link.notes }}
+            v-chip(v-for='tag in link.tags' :key='tag' size="x-small") {{ tag.toUpperCase() }}
+        v-card-text 
+          v-text-field(label="title" v-model="newLink.title")
+          v-text-field(label="url" v-model="newLink.url")
+          v-text-field(label="tags" v-model="newLink.tags")
         v-card-actions 
           v-btn(icon="mdi-link" :href="link.url" target="_blank")
           v-spacer
           v-btn(color='primary' text @click='editLink(link.id)' icon="mdi-pen")
+          v-btn(@click="updateLink(link.id)" color='primary' text icon="mdi-check")
           v-btn(color='primary' text @click='deleteLink(link.id)' icon="mdi-delete")
       v-card(v-else) 
         v-card-text
@@ -43,11 +46,12 @@ const linksStore = useLinksStore();
 const user = useCurrentUser();
 const links = computed(() => linksStore.links);
 const edit = ref(false);
-const newLink = {
+const newLink = ref({
   title: "",
   url: "",
   tags: "",
-};
+});
+
 const search = ref("");
 
 const filterLinks = computed(() => {
@@ -61,11 +65,19 @@ const filterLinks = computed(() => {
   });
 });
 
+function updateLink(id) {
+  linksStore.updateLink(id, newLink);
+  newLink.value.title = "";
+  newLink.value.url = "";
+  newLink.value.tags = "";
+  edit.value = false;
+}
+
 const addLink = () => {
   linksStore.addLink(newLink);
-  newLink.title = "";
-  newLink.url = "";
-  newLink.tags = "";
+  newLink.value.title = "";
+  newLink.value.url = "";
+  newLink.value.tags = "";
 };
 
 const deleteLink = (index) => {
