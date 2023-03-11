@@ -11,7 +11,7 @@ v-container
               v-text-field(v-model='search' label='Search links by title or tag' outlined)
               AddLinkDialog
   v-row
-    v-col(cols='12' xl="6" lg="4" md="6" v-for='(link, index) in filterLinks' :key='index')
+    v-col(cols='12' xl="3" lg="4" md="6" v-for='(link, index) in filterLinks' :key='index')
       v-card(v-if='links.length > 0')
         v-card-title
           h3 {{ link.title }}
@@ -46,12 +46,6 @@ const linksStore = useLinksStore();
 const user = useCurrentUser();
 const links = computed(() => linksStore.links);
 const edit = ref(false);
-const newLink = ref({
-  title: "",
-  url: "",
-  tags: "",
-});
-
 const search = ref("");
 
 const filterLinks = computed(() => {
@@ -65,34 +59,27 @@ const filterLinks = computed(() => {
   });
 });
 
-function updateLink(id) {
-  linksStore.updateLink(id, newLink);
-  newLink.value.title = "";
-  newLink.value.url = "";
-  newLink.value.tags = "";
+function updateLink(id, link) {
+  // Update the link in the store
+  linksStore.updateLink(id, link);
+
+  // We are no longer editing a link
   edit.value = false;
 }
 
-const addLink = () => {
-  linksStore.addLink(newLink);
-  newLink.value.title = "";
-  newLink.value.url = "";
-  newLink.value.tags = "";
-};
-
-const deleteLink = (index) => {
+function deleteLink(index) {
   confirm("Are you sure you want to delete this link?") &&
     linksStore.deleteLink(index);
-};
+}
 
-const isYouTubeLink = (url) => {
+function isYouTubeLink(url) {
   return url.includes("https://youtu.be/");
-};
+}
 
-const getYouTubeEmbedUrl = (url) => {
+function getYouTubeEmbedUrl(url) {
   const videoId = url.split(".be/")[1];
   return `https://www.youtube.com/embed/${videoId}`;
-};
+}
 
 onMounted(() => {
   if (user) {

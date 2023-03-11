@@ -49,12 +49,18 @@ function deleteTag(index) {
   tags.value.splice(index, 1);
 }
 
-// Listen for share events
-// if ("share" in navigator) {
-//   navigator.share.addEventListener("share", (event) => {
-//     linkTitle.value = event.data.title;
-//     linkUrl.value = event.data.url;
-//     dialog.value = true;
-//   });
-// }
+const showDialog = () => {
+  // check if navigator.share is available
+  if ("share" in navigator) {
+    // attach an event listener to handle incoming share data
+    navigator.share.addEventListener("share", (event) => {
+      linkTitle.value = event.data.title;
+      linkUrl.value = event.data.url;
+      dialog.value = true;
+    });
+  } else {
+    // fallback for devices that don't support the Web Share API
+    dialog.value = true;
+  }
+};
 </script>
